@@ -5,13 +5,17 @@ const cors = require('cors')
 
 const app = express()
 app.use(cors())
-const port = 3000
+
+const port = process.env.PORT || 3000
+const smtp_login = process.env.SMTP_LOGIN
+const smtp_password = process.env.SMTP_PASSWORD
+const smtp_receivers_email = process.env.SMTP_RECEIVERS_EMAIL
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'testaccbenchuk@gmail.com',
-        pass: 'ytprqyzouxikpzwz'
+        user: smtp_login,
+        pass: smtp_password
     }
 })
 
@@ -19,7 +23,7 @@ app.get('/', async function (req, res) {
 
     const mailOptions = {
         from: 'Message from HR!', // sender address
-        to: 'juliebenchuk@gmail.com', // list of receivers
+        to: smtp_receivers_email, // list of receivers
         subject: 'Message from HR!', // Subject line
         html: '<h1>this is a test mail.</h1>'// plain text body
     };
