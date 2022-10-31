@@ -1,10 +1,13 @@
 const express = require('express')
 const nodemailer = require('nodemailer')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 
 
 const app = express()
 app.use(cors())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
 const port = process.env.PORT || 3000
 const smtp_login = process.env.SMTP_LOGIN
@@ -19,17 +22,20 @@ let transporter = nodemailer.createTransport({
     }
 })
 
-app.get('/', async function (req, res) {
-
+app.post('/', async function (req, res) {
+    const {name, email, subject, message} = req.body
     const mailOptions = {
-        from: 'Message from HR!', // sender address
+        from: name, // sender address
         to: smtp_receivers_email, // list of receivers
-        subject: 'Message from HR!', // Subject line
-        html: '<h1>this is a test mail.</h1>'// plain text body
+        subject: subject, // Subject line
+        html: `<h1>New message from HR!</h1>
+<div>You have new message from ${email}: ${message}</div>`// plain text body
     };
 
     await transporter.sendMail(mailOptions);
-    res.send("Hello World!")
+})
+app.get('/', function (req, res) {
+    res.send('Hello world!')
 })
 
 app.listen(port, () => {
