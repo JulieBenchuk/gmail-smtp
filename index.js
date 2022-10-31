@@ -9,7 +9,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3010
 const smtp_login = process.env.SMTP_LOGIN
 const smtp_password = process.env.SMTP_PASSWORD
 const smtp_receivers_email = process.env.SMTP_RECEIVERS_EMAIL
@@ -33,10 +33,11 @@ app.post('/', async function (req, res) {
     };
 
     await transporter.sendMail(mailOptions);
+    res.send("ok")
 })
-app.get('/', function (req, res) {
+/*app.get('/', function (req, res) {
     res.send('Hello world!')
-})
+})*/
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
