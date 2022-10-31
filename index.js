@@ -17,7 +17,7 @@ const smtp_receivers_email = process.env.SMTP_RECEIVERS_EMAIL
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: smtp_login,
+        user: smtp_login, //test account
         pass: smtp_password // password from 2FA
     }
 })
@@ -28,7 +28,7 @@ app.post('/', async function (req, res) {
     const mailOptions = {
         from: name, // sender address
         to: smtp_receivers_email, // list of receivers
-        subject: subject, // Subject line
+        subject: subject, // subject line
         html: `<h1>New message from HR!</h1>
 <div>You have new message from <b>${email}</b>: ${message}</div>`// plain text body
     };
