@@ -18,27 +18,25 @@ let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: smtp_login,
-        pass: smtp_password
+        pass: smtp_password // password from 2FA
     }
 })
 
 app.post('/', async function (req, res) {
+
     const {name, email, subject, message} = req.body
     const mailOptions = {
         from: name, // sender address
         to: smtp_receivers_email, // list of receivers
         subject: subject, // Subject line
         html: `<h1>New message from HR!</h1>
-<div>You have new message from ${email}: ${message}</div>`// plain text body
+<div>You have new message from <b>${email}</b>: ${message}</div>`// plain text body
     };
 
     await transporter.sendMail(mailOptions);
-    res.send("ok")
+    res.send("Ok")
 })
-/*app.get('/', function (req, res) {
-    res.send('Hello world!')
-})*/
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`App listening on port ${port}`)
 })
