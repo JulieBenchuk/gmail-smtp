@@ -9,7 +9,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-const port = process.env.PORT || 3010
+const port = process.env.PORT || 5000
 const smtp_login = process.env.SMTP_LOGIN
 const smtp_password = process.env.SMTP_PASSWORD
 const smtp_receivers_email = process.env.SMTP_RECEIVERS_EMAIL
